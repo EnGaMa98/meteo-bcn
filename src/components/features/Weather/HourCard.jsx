@@ -1,26 +1,20 @@
 import WeatherSkyIcon from './WeatherSkyIcon';
 
 const HourCard = ({ hour, isCurrent }) => {
-  const temperature = hour.variables.find((variable) => variable.nom === 'temp');
-  const precipitation = hour.variables.find((variable) => variable.nom === 'precip');
-  const sky = hour.variables.find((variable) => variable.nom === 'estatCel');
-
-  const className = isCurrent ? 'hour-card hour-card--current' : 'hour-card';
+  const className = isCurrent ? 'hour-chip hour-chip--active' : 'hour-chip';
 
   return (
     <div className={className}>
-      <span className={'hour-card__time'}>
-        {String(hour.hora).padStart(2, '0')}:00
+      <span className={'hour-chip__time'}>
+        {isCurrent ? 'Ara' : `${String(hour.hora).padStart(2, '0')}h`}
       </span>
-      {sky && <WeatherSkyIcon skyCode={sky.valor} size={'small'} />}
-      <span className={'hour-card__temp'}>
-        {temperature ? `${Math.round(temperature.valor)}°` : '--°'}
+      <WeatherSkyIcon skyCode={hour.sky} size={'small'} isCurrent={isCurrent} />
+      <span className={'hour-chip__temp'}>
+        {Math.round(hour.temp)}°
       </span>
-      {precipitation && precipitation.valor > 0 && (
-        <span className={'hour-card__rain'}>
-          {precipitation.valor} mm
-        </span>
-      )}
+      <span className={'hour-chip__rain'}>
+        {hour.precip} mm
+      </span>
     </div>
   );
 };

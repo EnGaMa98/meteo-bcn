@@ -1,48 +1,41 @@
+import { useRef, useEffect } from 'react';
 import HourCard from './HourCard';
 
 function HourlyForecast({ days, currentHour }) {
-  if (!days || days.length === 0) {
+  const scrollRef = useRef(null);
+
+  const today = new Date().toISOString().split('T')[0];
+  const todayData = days?.find((day) => day.data === today) || days?.[0];
+
+  useEffect(() => {
+    if (!scrollRef.current || !todayData) return;
+
+    const currentIndex = todayData.hours.findIndex((hour) => hour.hora === currentHour);
+    if (currentIndex > 0) {
+      const chipWidth = 70;
+      scrollRef.current.scrollLeft = currentIndex * chipWidth - 20;
+    }
+  }, [todayData, currentHour]);
+
+  if (!todayData) {
     return null;
   }
 
-  const today = new Date();
-
-  const formatDayTitle = (dateString) => {
-    const date = new Date(dateString + 'T00:00:00');
-    const isToday = date.toDateString() === today.toDateString();
-    const tomorrow = new Date(today);
-    tomorrow.setDate(tomorrow.getDate() + 1);
-    const isTomorrow = date.toDateString() === tomorrow.toDateString();
-
-    if (isToday) return 'Avui';
-    if (isTomorrow) return 'Demà';
-
-    return date.toLocaleDateString('ca-ES', {
-      weekday: 'long',
-      day: 'numeric',
-      month: 'long',
-    });
-  };
-
   return (
-    <div className={'hourly-section'}>
-      <div className={'hourly-section__title'}>Previsió horària</div>
-      {days.map((day) => (
-        <div key={day.data} className={'day-section'}>
-          <div className={'day-section__title'}>
-            {formatDayTitle(day.data)}
-          </div>
-          <div className={'hourly-list'}>
-            {day.hpiores.map((hour) => (
-              <HourCard
-                key={`${day.data}-${hour.hora}`}
-                hour={hour}
-                isCurrent={day.data === today.toISOString().split('T')[0] && hour.hora === currentHour}
-              />
-            ))}
-          </div>
-        </div>
-      ))}
+    <div className={'card hourly'}>
+      <div className={'section-title section-title--with-link'}>
+        <span>Previsió horària</span>
+        <span className={'section-title__link'}>Properes 24h</span>
+      </div>
+      <div className={'hourly__list'} ref={scrollRef}>
+        {todayData.hours.map((hour) => (
+          <HourCard
+            key={hour.hora}
+            hour={hour}
+            isCurrent={hour.hora === currentHour}
+          />
+        ))}
+      </div>
     </div>
   );
 }

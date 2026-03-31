@@ -1,5 +1,7 @@
 @use 'variables' as *;
 
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
 * {
   margin: 0;
   padding: 0;
@@ -7,146 +9,320 @@
 }
 
 body {
-  font-family: 'Roboto', sans-serif;
-  background-color: $background;
+  font-family: 'Inter', sans-serif;
+  background-color: $bg-dark;
   color: $text-primary;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+}
+
+#root {
+  width: 100%;
+  max-width: 420px;
   min-height: 100vh;
 }
 
-.app-container {
-  max-width: 900px;
-  margin: 0 auto;
-  padding: $spacing-lg;
+.app {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-md;
+  padding: $spacing-md;
+  padding-bottom: $spacing-xl;
 }
 
-.app-header {
-  text-align: center;
-  margin-bottom: $spacing-xl;
-
-  &__title {
-    font-size: 1.8rem;
-    font-weight: 700;
-    color: $text-primary;
-  }
-
-  &__subtitle {
-    font-size: 0.95rem;
-    color: $text-secondary;
-    margin-top: $spacing-xs;
-  }
-}
-
-.current-weather {
+.card {
   background: white;
   border-radius: $radius-lg;
   padding: $spacing-lg;
-  margin-bottom: $spacing-lg;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
 
-  &__main {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: $spacing-lg;
-  }
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: $spacing-sm 0;
 
-  &__temp {
-    font-size: 3.5rem;
-    font-weight: 700;
-  }
-
-  &__details {
-    display: flex;
-    gap: $spacing-lg;
-    justify-content: center;
-    margin-top: $spacing-md;
-  }
-
-  &__detail {
+  &__location {
     display: flex;
     align-items: center;
     gap: $spacing-xs;
-    color: $text-secondary;
-    font-size: 0.9rem;
-  }
-}
-
-.hourly-section {
-  background: white;
-  border-radius: $radius-lg;
-  padding: $spacing-lg;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
-
-  &__title {
-    font-size: 1.1rem;
     font-weight: 600;
-    margin-bottom: $spacing-md;
-  }
-}
-
-.hourly-list {
-  display: flex;
-  gap: $spacing-sm;
-  overflow-x: auto;
-  padding-bottom: $spacing-sm;
-
-  &::-webkit-scrollbar {
-    height: 6px;
+    font-size: 0.95rem;
+    color: $text-dark;
   }
 
-  &::-webkit-scrollbar-thumb {
-    background: $border-color;
-    border-radius: 3px;
-  }
-}
-
-.hour-card {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  min-width: 75px;
-  padding: $spacing-sm $spacing-md;
-  border-radius: $radius-md;
-  border: 1px solid $border-color;
-  gap: $spacing-xs;
-  transition: background-color 0.2s;
-
-  &:hover {
-    background-color: $primary-light;
-  }
-
-  &--current {
-    background-color: $primary-light;
-    border-color: $primary;
-  }
-
-  &__time {
-    font-size: 0.8rem;
-    font-weight: 600;
-    color: $text-secondary;
-  }
-
-  &__temp {
-    font-size: 1.1rem;
-    font-weight: 700;
-  }
-
-  &__rain {
-    font-size: 0.75rem;
-    color: $rain-color;
+  &__date {
+    font-size: 0.82rem;
+    color: $text-muted;
     font-weight: 500;
   }
 }
 
-.day-section {
-  margin-bottom: $spacing-lg;
+.hero {
+  text-align: left;
+  padding: $spacing-lg;
+  padding-bottom: $spacing-md;
+
+  &__date {
+    font-size: 0.85rem;
+    color: $text-muted;
+    margin-bottom: $spacing-sm;
+  }
+
+  &__temp-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  &__temp {
+    font-size: 4.5rem;
+    font-weight: 800;
+    line-height: 1;
+    color: $text-dark;
+  }
+
+  &__icon {
+    flex-shrink: 0;
+  }
+
+  &__condition {
+    font-size: 1.1rem;
+    color: $text-muted;
+    margin-top: $spacing-xs;
+    font-weight: 500;
+  }
+}
+
+.section-title {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: $text-dark;
+  margin-bottom: $spacing-md;
+
+  &--with-link {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__link {
+    font-size: 0.8rem;
+    color: $accent;
+    font-weight: 600;
+    cursor: pointer;
+  }
+}
+
+.hourly {
+  padding: $spacing-lg;
+
+  &__list {
+    display: flex;
+    gap: $spacing-sm;
+    overflow-x: auto;
+    padding-bottom: $spacing-xs;
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+}
+
+.hour-chip {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 62px;
+  padding: $spacing-sm $spacing-sm;
+  border-radius: $radius-md;
+  gap: 6px;
+  transition: all 0.2s;
+
+  &--active {
+    background-color: $accent;
+    color: white;
+
+    .hour-chip__time,
+    .hour-chip__temp,
+    .hour-chip__rain {
+      color: white;
+    }
+  }
+
+  &__time {
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: $text-muted;
+    text-transform: uppercase;
+  }
+
+  &__temp {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: $text-dark;
+  }
+
+  &__rain {
+    font-size: 0.65rem;
+    color: $rain;
+    font-weight: 500;
+  }
+}
+
+.details {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-md;
+
+  &__row {
+    display: flex;
+    gap: $spacing-md;
+  }
+}
+
+.detail-card {
+  flex: 1;
+  padding: $spacing-lg;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-sm;
+
+  &__header {
+    display: flex;
+    align-items: center;
+    gap: $spacing-xs;
+  }
+
+  &__icon {
+    color: $accent;
+    font-size: 1.2rem !important;
+  }
+
+  &__label {
+    font-size: 0.8rem;
+    color: $text-muted;
+    font-weight: 500;
+  }
+
+  &__value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: $text-dark;
+  }
+
+  &__unit {
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: $text-muted;
+  }
+
+  &__bar {
+    height: 6px;
+    background: #e8edf2;
+    border-radius: 3px;
+    overflow: hidden;
+    margin-top: $spacing-xs;
+
+    &-fill {
+      height: 100%;
+      border-radius: 3px;
+      transition: width 0.5s ease;
+    }
+  }
+}
+
+.forecast {
+  padding: $spacing-lg;
 
   &__title {
-    font-size: 1rem;
-    font-weight: 600;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: $accent;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-bottom: $spacing-xs;
+  }
+
+  &__heading {
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: $text-dark;
+    margin-bottom: $spacing-lg;
+  }
+}
+
+.day-card {
+  padding: $spacing-md 0;
+  border-bottom: 1px solid #f0f0f0;
+
+  &:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+
+  &--clickable {
+    cursor: pointer;
+    border-radius: $radius-md;
+    padding: $spacing-md;
+    margin: 0 (-$spacing-sm);
+    transition: background-color 0.15s;
+
+    &:hover {
+      background-color: #f8f9fa;
+    }
+
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+
+  &__left {
     margin-bottom: $spacing-sm;
-    color: $text-secondary;
-    text-transform: capitalize;
+  }
+
+  &__name {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: $text-dark;
+  }
+
+  &__condition {
+    font-size: 0.8rem;
+    color: $text-muted;
+  }
+
+  &__row {
+    display: flex;
+    align-items: center;
+    gap: $spacing-md;
+  }
+
+  &__temps {
+    display: flex;
+    align-items: baseline;
+    gap: 4px;
+    flex: 1;
+    justify-content: flex-end;
+  }
+
+  &__max {
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: $text-dark;
+  }
+
+  &__separator {
+    font-size: 1.2rem;
+    color: $text-muted;
+  }
+
+  &__min {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: $text-muted;
   }
 }
 
@@ -154,10 +330,14 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 300px;
+  min-height: 100vh;
 }
 
 .error-container {
-  text-align: center;
-  padding: $spacing-xl;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: $spacing-lg;
 }
