@@ -44,6 +44,12 @@ const useForecast = () => {
         setLoading(true);
         const response = await apiClient.get('');
         const raw = response.data;
+
+        if (!raw?.dies) {
+          setError(raw?.message || 'Resposta inesperada de la API');
+          return;
+        }
+
         const days = raw.dies.map(transformDay);
         setForecast({ codiMunicipi: raw.codiMunicipi, days });
       } catch (err) {
