@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
+  <rect width="512" height="512" rx="64" fill="#1976d2"/>
+  <circle cx="220" cy="190" r="72" fill="#f59e0b"/>
+  <circle cx="220" cy="190" r="58" fill="#fbbf24"/>
+  <ellipse cx="275" cy="290" rx="110" ry="62" fill="white" opacity="0.95"/>
+  <ellipse cx="210" cy="285" rx="72" ry="52" fill="white" opacity="0.95"/>
+  <ellipse cx="315" cy="295" rx="58" ry="42" fill="white" opacity="0.9"/>
+  <text x="256" y="440" text-anchor="middle" font-family="Arial,sans-serif" font-weight="bold" font-size="64" fill="white">BCN</text>
+</svg>
