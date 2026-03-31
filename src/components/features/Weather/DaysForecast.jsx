@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import WeatherSkyIcon, { getSkyLabel } from './WeatherSkyIcon';
+import { capitalize } from '../../../utils/format';
 
 const formatDayName = (dateString) => {
   const date = new Date(dateString + 'T00:00:00');
@@ -12,8 +13,7 @@ const formatDayName = (dateString) => {
   if (date.getTime() === today.getTime()) return 'Avui';
   if (date.getTime() === tomorrow.getTime()) return 'Demà';
 
-  const weekday = date.toLocaleDateString('ca-ES', { weekday: 'long' });
-  return weekday.charAt(0).toUpperCase() + weekday.slice(1);
+  return capitalize(date.toLocaleDateString('ca-ES', { weekday: 'long' }));
 };
 
 function DaysForecast({ days }) {

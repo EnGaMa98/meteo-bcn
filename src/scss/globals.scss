@@ -353,6 +353,21 @@ body {
   }
 }
 
+.skeleton {
+  background: linear-gradient(90deg, #e8edf2 25%, #f3f6f9 50%, #e8edf2 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite ease-in-out;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
 .loading-container {
   display: flex;
   justify-content: center;
@@ -364,7 +379,5 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  min-height: 100vh;
   padding: $spacing-lg;
 }

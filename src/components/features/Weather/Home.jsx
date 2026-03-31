@@ -1,9 +1,9 @@
 import LocationOnIcon from '@mui/icons-material/LocationOn';
-import CircularProgress from '@mui/material/CircularProgress';
 import Alert from '@mui/material/Alert';
 import Button from '@mui/material/Button';
 import { useForecastContext } from '../../../context/ForecastProvider';
 import CitySelector from './CitySelector';
+import HomeSkeleton from './HomeSkeleton';
 import CurrentWeather from './CurrentWeather';
 import HourlyForecast from './HourlyForecast';
 import WeatherDetails from './WeatherDetails';
@@ -11,31 +11,6 @@ import DaysForecast from './DaysForecast';
 
 function Home() {
   const { forecast, loading, error, currentHour, getCurrentHourData, city } = useForecastContext();
-
-  if (loading) {
-    return (
-      <div className={'loading-container'}>
-        <CircularProgress sx={{ color: '#2563eb' }} />
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div className={'error-container'}>
-        <Alert severity={'error'} sx={{ maxWidth: 500 }}>
-          Error carregant les dades: {error}
-        </Alert>
-        <Button
-          variant={'contained'}
-          sx={{ marginTop: 2 }}
-          onClick={() => window.location.reload()}
-        >
-          Reintentar
-        </Button>
-      </div>
-    );
-  }
 
   const now = new Date();
   const dateFormatted = now.toLocaleDateString('ca-ES', {
@@ -56,10 +31,32 @@ function Home() {
         </div>
       </div>
       <CitySelector />
-      <CurrentWeather hourData={getCurrentHourData()} />
-      <HourlyForecast days={forecast?.days} currentHour={currentHour} />
-      <WeatherDetails hourData={getCurrentHourData()} />
-      <DaysForecast days={forecast?.days} />
+
+      {error && (
+        <div className={'error-container'}>
+          <Alert severity={'error'} sx={{ maxWidth: 500 }}>
+            Error carregant les dades: {error}
+          </Alert>
+          <Button
+            variant={'contained'}
+            sx={{ marginTop: 2 }}
+            onClick={() => window.location.reload()}
+          >
+            Reintentar
+          </Button>
+        </div>
+      )}
+
+      {loading && <HomeSkeleton />}
+
+      {!loading && !error && (
+        <>
+          <CurrentWeather hourData={getCurrentHourData()} />
+          <HourlyForecast days={forecast?.days} currentHour={currentHour} />
+          <WeatherDetails hourData={getCurrentHourData()} />
+          <DaysForecast days={forecast?.days} />
+        </>
+      )}
     </div>
   );
 }

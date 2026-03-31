@@ -1,9 +1,11 @@
 import { useParams, useNavigate } from 'react-router-dom';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import LocationOnIcon from '@mui/icons-material/LocationOn';
 import IconButton from '@mui/material/IconButton';
 import { useForecastContext } from '../../../context/ForecastProvider';
 import HourCard from './HourCard';
 import WeatherSkyIcon, { getSkyLabel } from './WeatherSkyIcon';
+import { capitalize } from '../../../utils/format';
 
 const formatDayTitle = (dateString) => {
   const date = new Date(dateString + 'T00:00:00');
@@ -15,11 +17,11 @@ const formatDayTitle = (dateString) => {
   if (date.getTime() === today.getTime()) return 'Avui';
   if (date.getTime() === tomorrow.getTime()) return 'Demà';
 
-  return date.toLocaleDateString('ca-ES', {
+  return capitalize(date.toLocaleDateString('ca-ES', {
     weekday: 'long',
     day: 'numeric',
     month: 'long',
-  });
+  }));
 };
 
 function DayDetail() {
@@ -53,6 +55,10 @@ function DayDetail() {
         <IconButton onClick={() => navigate('/')} sx={{ color: '#2563eb' }}>
           <ArrowBackIcon />
         </IconButton>
+        <div className={'header__location'}>
+          <LocationOnIcon sx={{ fontSize: '1.1rem', color: '#2563eb' }} />
+          {city.name}
+        </div>
         <div className={'header__date'}>
           {formatDayTitle(day.data)}
         </div>
