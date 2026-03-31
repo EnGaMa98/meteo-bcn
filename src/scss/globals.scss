@@ -59,6 +59,33 @@ body {
   }
 }
 
+.city-selector {
+  display: flex;
+  gap: $spacing-sm;
+  background: white;
+  border-radius: $radius-lg;
+  padding: $spacing-xs;
+
+  &__btn {
+    flex: 1;
+    padding: $spacing-sm $spacing-md;
+    border: none;
+    border-radius: $radius-md;
+    background: transparent;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: $text-muted;
+    cursor: pointer;
+    transition: all 0.2s;
+
+    &--active {
+      background: $accent;
+      color: white;
+    }
+  }
+}
+
 .hero {
   text-align: left;
   padding: $spacing-lg;

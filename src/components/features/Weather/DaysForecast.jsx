@@ -12,21 +12,24 @@ const formatDayName = (dateString) => {
   if (date.getTime() === today.getTime()) return 'Avui';
   if (date.getTime() === tomorrow.getTime()) return 'Demà';
 
-  return date.toLocaleDateString('ca-ES', { weekday: 'long' });
+  const weekday = date.toLocaleDateString('ca-ES', { weekday: 'long' });
+  return weekday.charAt(0).toUpperCase() + weekday.slice(1);
 };
 
 function DaysForecast({ days }) {
   const navigate = useNavigate();
 
-  if (!days || days.length === 0) {
+  const nextDays = days?.slice(1);
+
+  if (!nextDays || nextDays.length === 0) {
     return null;
   }
 
   return (
     <div className={'card forecast'}>
       <div className={'forecast__title'}>Previsió</div>
-      <div className={'forecast__heading'}>Pròxims {days.length} dies</div>
-      {days.map((day) => (
+      <div className={'forecast__heading'}>Pròxims {nextDays.length} dies</div>
+      {nextDays.map((day) => (
         <div
           key={day.data}
           className={'day-card day-card--clickable'}

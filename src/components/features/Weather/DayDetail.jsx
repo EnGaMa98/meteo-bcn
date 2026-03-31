@@ -25,7 +25,7 @@ const formatDayTitle = (dateString) => {
 function DayDetail() {
   const { date } = useParams();
   const navigate = useNavigate();
-  const { forecast, currentHour } = useForecastContext();
+  const { forecast, currentHour, city } = useForecastContext();
 
   const day = forecast?.days?.find((day) => day.data === date);
 

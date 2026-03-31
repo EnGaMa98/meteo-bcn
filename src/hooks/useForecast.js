@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import apiClient from '../configuration/axiosConfiguration';
 
 const getHourFromDate = (dateString) => {
@@ -33,34 +33,35 @@ const transformDay = (day) => {
   };
 };
 
-const useForecast = () => {
+const useForecast = (cityCode) => {
   const [forecast, setForecast] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  useEffect(() => {
-    const fetchForecast = async () => {
-      try {
-        setLoading(true);
-        const response = await apiClient.get('');
-        const raw = response.data;
+  const fetchForecast = useCallback(async () => {
+    try {
+      setLoading(true);
+      setError(null);
+      const response = await apiClient.get(cityCode + '/');
+      const raw = response.data;
 
-        if (!raw?.dies) {
-          setError(raw?.message || 'Resposta inesperada de la API');
-          return;
-        }
-
-        const days = raw.dies.map(transformDay);
-        setForecast({ codiMunicipi: raw.codiMunicipi, days });
-      } catch (err) {
-        setError(err.response?.data?.message || err.message);
-      } finally {
-        setLoading(false);
+      if (!raw?.dies) {
+        setError(raw?.message || 'Resposta inesperada de la API');
+        return;
       }
-    };
 
+      const days = raw.dies.map(transformDay);
+      setForecast({ codiMunicipi: raw.codiMunicipi, days });
+    } catch (err) {
+      setError(err.response?.data?.message || err.message);
+    } finally {
+      setLoading(false);
+    }
+  }, [cityCode]);
+
+  useEffect(() => {
     fetchForecast();
-  }, []);
+  }, [fetchForecast]);
 
   return { forecast, loading, error };
 };
